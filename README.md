@@ -1,4 +1,4 @@
-# Alzeimer_Detection
+# Alzeimer_Detection(Download the .ipynb to use them)
 
 # Comparative Analysis of Federated Learning Strategies for Alzheimer's Disease Detection
 
