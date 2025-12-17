@@ -4,19 +4,19 @@
 This project performs a comparative analysis of Federated Learning (FL) strategies for detecting Alzheimer's disease using the OASIS MRI dataset It addresses the privacy-utility trade-off in medical imaging by training models locally on decentralized data.
 
 ## Key Features
-**Dataset:** OASIS MRI (86,437 images) covering four classes: Non Demented, Very Mild, Mild, and Moderate Dementia[cite: 198].
-**Architecture:** A lightweight, custom 4-block CNN designed for MRI feature extraction[cite: 65].
-**Algorithms:** Implementation and comparison of Federated Averaging (FedAvg) and FedProx[cite: 8].
-**Non-IID Handling:** Evaluates performance under extreme data atomization (20 clients) and class imbalance[cite: 216].
+**Dataset:** OASIS MRI (86,437 images) covering four classes: Non Demented, Very Mild, Mild, and Moderate Dementia.
+**Architecture:** A lightweight, custom 4-block CNN designed for MRI feature extraction.
+**Algorithms:** Implementation and comparison of Federated Averaging (FedAvg) and FedProx.
+**Non-IID Handling:** Evaluates performance under extreme data atomization (20 clients) and class imbalance.
 
 ## Methodology
-1.**Centralized Baseline:** Established using SGD (99.27% accuracy), which outperformed Adam (97.86%)[cite: 7, 136].
+1.**Centralized Baseline:** Established using SGD (99.27% accuracy), which outperformed Adam .
 2.  **Federated Setup:**
-    **FedAvg:** Standard weighted averaging of client parameters[cite: 76].
+    **FedAvg:** Standard weighted averaging of client parameters.
     **FedProx:** Adds a proximal term ($\mu$) to handle statistical heterogeneity.
 
 ## Results
-The study found that tuning the proximal term in FedProx recovers performance in scaled networks[cite: 11].
+The study found that tuning the proximal term in FedProx recovers performance in scaled networks.
 
 | Algorithm | Scenario | Accuracy |
 | :--- | :--- | :--- |
