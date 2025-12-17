@@ -1,67 +1,109 @@
-# Alzeimer_Detection(Download the .ipynb to use them)
+Here is the concise, sticker-free version of the `README.md` based on your report.
 
-# Comparative Analysis of Federated Learning Strategies for Alzheimer's Disease Detection
+---
 
-![Project Status](https://img.shields.io/badge/Status-Completed-success)
-![Framework](https://img.shields.io/badge/Framework-Flower-orange)
-![Library](https://img.shields.io/badge/Library-PyTorch-red)
-![Domain](https://img.shields.io/badge/Domain-Medical%20Imaging-blue)
+# Federated Learning for Alzheimer's Disease Detection
 
-## 📌 Project Overview
+## Project Overview
 
-This project explores the application of **Federated Learning (FL)** for detecting Alzheimer's disease using the **OASIS MRI dataset**. The study addresses the critical "Privacy-Utility Trade-off" in medical imaging, where strict regulations (HIPAA/GDPR) prevent the centralization of sensitive patient data.
+This project implements **Federated Learning (FL)** for multi-class Alzheimer's Disease detection using the OASIS MRI dataset.
 
-We implemented and benchmarked two federated algorithms—**Federated Averaging (FedAvg)** and **FedProx**—against a robust centralized baseline. The project specifically focuses on optimization stability under **Non-IID (Non-Independent and Identically Distributed)** conditions and extreme data atomization (20+ clients).
+The methodology builds upon the work of **Khan and Kwon (2024)**, who developed a custom CNN for centralized detection to address class imbalance. While their approach achieved high accuracy, it required centralized data aggregation.
 
-## 📊 Key Results
+My work extends this by decentralizing the model using **FedAvg** and **FedProx**, enabling training across 10 and 20 clients without sharing raw patient data.
 
-The study established that while FedAvg performs well in smaller networks, **FedProx** is superior for larger, heterogeneous networks when the proximal term ($\mu$) is properly tuned.
+## Dataset
 
-| Scenario | Algorithm | Configuration | Final Accuracy |
-| :--- | :--- | :--- | :--- |
-| **Centralized Baseline** | SGD | LR=0.001, Momentum=0.9 | **99.27%** |
-| **10 Clients** | FedAvg | Standard | 96.89% |
-| **10 Clients** | FedProx | $\mu=0.1$ | 97.71% |
-| **20 Clients** | FedAvg | Standard | 98.29% |
-| **20 Clients** | FedProx | $\mu=0.1$ (Untuned) | 75.65% |
-| **20 Clients** | **FedProx** | **$\mu=0.01$ (Tuned)** | **98.65%** |
+The project uses the **OASIS MRI Dataset** (86,437 images). The data is highly imbalanced, with a severe scarcity of "Moderate Dementia" samples.
 
-## 🧠 Model Architecture
+| Class Label | Image Count |
+| --- | --- |
+| Non Demented | 67,222 
 
-We designed a lightweight, custom **4-block Convolutional Neural Network (CNN)** optimized for MRI feature extraction while minimizing computational overhead for local clients.
+ |
+| Very Mild Dementia | 13,725 
 
-* **Input:** $128 \times 128 \times 3$ images
-* **Feature Extraction:** 4 Blocks utilizing Conv2D, Batch Normalization, ReLU, and MaxPool.
-* **Regularization:** Dropout ($p=0.3$, $p=0.4$) used to strictly control overfitting on small local datasets.
-* **Classifier Head:** Global Average Pooling $\rightarrow$ Dense(128) $\rightarrow$ Softmax (4 classes).
+ |
+| Mild Dementia | 5,002 
 
-## 📂 Dataset
+ |
+| Moderate Dementia | 488 
 
-The project utilizes the **Open Access Series of Imaging Studies (OASIS)** MRI dataset, comprising **86,437 images**. The dataset is highly imbalanced, creating a significant challenge for federated optimization:
+ |
 
-* **Non Demented:** ~67,000 images
-* **Very Mild Dementia:** ~13,700 images
-* **Mild Dementia:** ~5,000 images
-* **Moderate Dementia:** ~488 images (Critical Scarcity)
+## Methodology
 
-## 🛠️ Methodology
+### 1. Centralized Baseline
 
-1.  **Centralized Baseline:** Established a performance ceiling (99.27%) using SGD, proving it superior to Adam for this specific topography.
-2.  **Federated Simulation:**
-    * **FedAvg:** Standard weighted averaging of client parameters.
-    * **FedProx:** Adds a proximal term $\frac{\mu}{2}||w-w^t||^2$ to the local loss function to penalize updates that drift too far from the global model.
-3.  **Non-IID Simulation:** Data was randomly split across 10 and 20 clients, creating extreme data atomization where some clients received as few as 20 examples of the "Moderate Dementia" class.
+I replicated the high-performance baseline using a custom 4-block CNN.
 
-## 🚀 Installation & Usage
+* 
+**Optimizer:** Stochastic Gradient Descent (SGD) was selected over Adam.
 
-### Prerequisites
-* Python 3.8+
-* PyTorch (GPU support recommended)
-* Flower (flwr)
-* NumPy, Pandas, Matplotlib
 
-### Installation
-```bash
-git clone [https://github.com/vipulsharma1646/Alzeimer_Detection.git](https://github.com/vipulsharma1646/Alzeimer_Detection.git)
-cd Alzeimer_Detection
-pip install -r requirements.txt
+* 
+**Accuracy:** Achieved **99.27%**.
+
+
+
+### 2. Federated Implementation
+
+I simulated a decentralized network with Non-IID data partitions across 10 and 20 clients.
+
+* 
+**FedAvg:** Evaluated as the standard FL algorithm.
+
+
+* 
+**FedProx:** Implemented to handle data heterogeneity by adding a proximal term (\mu) to the loss function.
+
+
+
+## Results
+
+The decentralized FedProx model achieved accuracy comparable to the centralized baseline.
+
+| Scenario | Algorithm | Accuracy | Notes |
+| --- | --- | --- | --- |
+| **Centralized** | **SGD** | <br>**99.27%** 
+
+ | Baseline benchmark. |
+| 10 Clients | FedAvg | 96.89% 
+
+ | High volatility due to client drift. |
+| 20 Clients | FedAvg | 98.29% 
+
+ | Slower convergence but stable. |
+| **20 Clients** | **FedProx (\mu=0.01)** | <br>**98.65%** 
+
+ | <br>**Best FL Result.** Recovered from 75% after tuning.
+
+ |
+
+## Tech Stack
+
+* **Language:** Python
+* 
+**Frameworks:** PyTorch, Flower (flwr) 
+
+
+* 
+**Data:** OASIS MRI 
+
+
+
+## References
+
+* Khan, F. F., & Kwon, G. R. (2024). Comparison and analysis of CNN models to Address Skewed Data Issues in Alzheimer's Diagnosis.
+
+
+* McMahan, B., et al. (2017). Communication-Efficient Learning of Deep Networks from Decentralized Data (FedAvg).
+
+
+* Li, T., et al. (2020). Federated Optimization in Heterogeneous Networks (FedProx).
+
+
+
+---
+
+**Would you like me to create the `requirements.txt` file next?**
