@@ -1,109 +1,73 @@
-Here is the concise, sticker-free version of the `README.md` based on your report.
+Federated Learning for Alzheimer's Disease Detection
 
----
+Overview
 
-# Federated Learning for Alzheimer's Disease Detection
+This project decentralizes Alzheimer's Disease detection using Federated Learning (FL). It builds upon the centralized approach by Khan and Kwon (2024), who addressed class imbalance using a custom CNN on the OASIS dataset.
 
-## Project Overview
+While the original paper relied on centralized data training, this project implements FedAvg and FedProx to achieve privacy-preserving training across decentralized clients without sharing raw MRI data.
 
-This project implements **Federated Learning (FL)** for multi-class Alzheimer's Disease detection using the OASIS MRI dataset.
+Dataset
 
-The methodology builds upon the work of **Khan and Kwon (2024)**, who developed a custom CNN for centralized detection to address class imbalance. While their approach achieved high accuracy, it required centralized data aggregation.
+OASIS MRI Dataset (86,437 images)
 
-My work extends this by decentralizing the model using **FedAvg** and **FedProx**, enabling training across 10 and 20 clients without sharing raw patient data.
+Classes: Non Demented, Very Mild, Mild, and Moderate Dementia.
 
-## Dataset
+Challenge: Severe class imbalance (only 488 "Moderate" samples vs 67k "Non Demented").
 
-The project uses the **OASIS MRI Dataset** (86,437 images). The data is highly imbalanced, with a severe scarcity of "Moderate Dementia" samples.
+Methodology
 
-| Class Label | Image Count |
-| --- | --- |
-| Non Demented | 67,222 
+Centralized Baseline: Replicated the Khan and Kwon architecture using SGD optimizer to establish a benchmark accuracy of 99.27%.
 
- |
-| Very Mild Dementia | 13,725 
+Decentralization:
 
- |
-| Mild Dementia | 5,002 
+FedAvg: Implemented standard federated averaging across 10 and 20 clients.
 
- |
-| Moderate Dementia | 488 
+FedProx: Applied to handle Non-IID data distribution by adding a proximal term to penalize local model drift.
 
- |
+Results
 
-## Methodology
+The decentralized FedProx model achieved accuracy comparable to the centralized baseline, proving viability for privacy-preserving medical AI.
 
-### 1. Centralized Baseline
+Approach
 
-I replicated the high-performance baseline using a custom 4-block CNN.
+Algorithm
 
-* 
-**Optimizer:** Stochastic Gradient Descent (SGD) was selected over Adam.
+Best Accuracy
 
+Centralized
 
-* 
-**Accuracy:** Achieved **99.27%**.
+SGD (Baseline)
 
+99.27%
 
+Federated (10 Clients)
 
-### 2. Federated Implementation
+FedAvg
 
-I simulated a decentralized network with Non-IID data partitions across 10 and 20 clients.
+96.89%
 
-* 
-**FedAvg:** Evaluated as the standard FL algorithm.
+Federated (20 Clients)
 
+FedAvg
 
-* 
-**FedProx:** Implemented to handle data heterogeneity by adding a proximal term (\mu) to the loss function.
+98.29%
 
+Federated (20 Clients)
 
+FedProx
 
-## Results
+98.65%
 
-The decentralized FedProx model achieved accuracy comparable to the centralized baseline.
+Technologies
 
-| Scenario | Algorithm | Accuracy | Notes |
-| --- | --- | --- | --- |
-| **Centralized** | **SGD** | <br>**99.27%** 
+Language: Python
 
- | Baseline benchmark. |
-| 10 Clients | FedAvg | 96.89% 
+Frameworks: PyTorch, Flower (flwr)
 
- | High volatility due to client drift. |
-| 20 Clients | FedAvg | 98.29% 
+References
 
- | Slower convergence but stable. |
-| **20 Clients** | **FedProx (\mu=0.01)** | <br>**98.65%** 
+Khan, F. F., & Kwon, G. R. (2024). Comparison and analysis of CNN models to Address Skewed Data Issues in Alzheimer's Diagnosis.
 
- | <br>**Best FL Result.** Recovered from 75% after tuning.
+McMahan, B., et al. (2017). Communication-Efficient Learning of Deep Networks from Decentralized Data.
 
- |
-
-## Tech Stack
-
-* **Language:** Python
-* 
-**Frameworks:** PyTorch, Flower (flwr) 
-
-
-* 
-**Data:** OASIS MRI 
-
-
-
-## References
-
-* Khan, F. F., & Kwon, G. R. (2024). Comparison and analysis of CNN models to Address Skewed Data Issues in Alzheimer's Diagnosis.
-
-
-* McMahan, B., et al. (2017). Communication-Efficient Learning of Deep Networks from Decentralized Data (FedAvg).
-
-
-* Li, T., et al. (2020). Federated Optimization in Heterogeneous Networks (FedProx).
-
-
-
----
-
-**Would you like me to create the `requirements.txt` file next?**
+Li, T., et al. (2020). Federated Optimization in Heterogeneous Networks.
