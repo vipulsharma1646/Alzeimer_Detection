@@ -1,7 +1,7 @@
 # Federated Learning Strategies for Alzheimer's Disease Detection
 
 ## Overview
-This project performs a comparative analysis of Federated Learning (FL) strategies for detecting Alzheimer's disease using the OASIS MRI dataset It addresses the privacy-utility trade-off in medical imaging by training models locally on decentralized data[cite: 14, 22].
+This project performs a comparative analysis of Federated Learning (FL) strategies for detecting Alzheimer's disease using the OASIS MRI dataset It addresses the privacy-utility trade-off in medical imaging by training models locally on decentralized data.
 
 ## Key Features
 **Dataset:** OASIS MRI (86,437 images) covering four classes: Non Demented, Very Mild, Mild, and Moderate Dementia[cite: 198].
