@@ -13,7 +13,7 @@ This project performs a comparative analysis of Federated Learning (FL) strategi
 1.**Centralized Baseline:** Established using SGD (99.27% accuracy), which outperformed Adam (97.86%)[cite: 7, 136].
 2.  **Federated Setup:**
     **FedAvg:** Standard weighted averaging of client parameters[cite: 76].
-    **FedProx:** Adds a proximal term ($\mu$) to handle statistical heterogeneity[cite: 77].
+    **FedProx:** Adds a proximal term ($\mu$) to handle statistical heterogeneity.
 
 ## Results
 The study found that tuning the proximal term in FedProx recovers performance in scaled networks[cite: 11].
